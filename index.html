@@ -673,7 +673,6 @@
         const favoritesSection = document.getElementById('favoritesSection');
         const particlesContainer = document.getElementById('particles');
 
-        // Create floating particles for background
         function createParticles() {
             const particleCount = 20;
             for (let i = 0; i < particleCount; i++) {
@@ -698,27 +697,21 @@
             }
         }
 
-        // API Configuration
         const API_KEY = 'demo_key';
         const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
-        // State
         let currentWeatherData = null;
         let favorites = JSON.parse(localStorage.getItem('weatherFavorites')) || [];
 
-        // Initialize the app
         function init() {
             createParticles();
             updateDateTime();
             setInterval(updateDateTime, 60000);
             
-            // Load default city weather
             getWeatherByCity('New York');
             
-            // Load favorites
             renderFavorites();
             
-            // Set up event listeners
             searchButton.addEventListener('click', handleSearch);
             searchInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') handleSearch();
@@ -727,21 +720,18 @@
             themeToggle.addEventListener('click', toggleTheme);
             addFavorite.addEventListener('click', addToFavorites);
             
-            // Check if dark mode is enabled
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i><span>Light Mode</span>';
             }
         }
 
-        // Update date and time
         function updateDateTime() {
             const now = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
             dateTime.textContent = now.toLocaleDateString('en-US', options);
         }
 
-        // Handle search
         function handleSearch() {
             const city = searchInput.value.trim();
             if (city) {
@@ -752,13 +742,11 @@
             }
         }
 
-        // Get weather by city name
         async function getWeatherByCity(city) {
             showLoading();
             hideError();
             
             try {
-                // Using mock data for demonstration
                 await new Promise(resolve => setTimeout(resolve, 800));
                 
                 const mockData = getMockWeatherData(city);
@@ -775,7 +763,6 @@
             }
         }
 
-        // Get current location weather
         function getCurrentLocationWeather() {
             if (!navigator.geolocation) {
                 showError('Geolocation is not supported by your browser.');
@@ -828,7 +815,6 @@
             );
         }
 
-        // Display weather data
         function displayWeatherData(data) {
             currentWeatherData = data;
             
@@ -840,19 +826,15 @@
             feelsLike.textContent = `${Math.round(data.main.feels_like)}°C`;
             pressure.textContent = `${data.main.pressure} hPa`;
             
-            // Set weather icon
             const iconClass = getWeatherIconClass(data.weather[0].id, data.weather[0].icon);
             weatherIcon.className = `fas ${iconClass}`;
             
             weatherCard.style.display = 'block';
             
-            // Update favorites button state
             updateFavoriteButton();
         }
 
-        // Get weather icon class based on weather condition
         function getWeatherIconClass(conditionCode, icon) {
-            // Day icons
             if (icon.includes('d')) {
                 if (conditionCode >= 200 && conditionCode < 300) return 'fa-bolt';
                 if (conditionCode >= 300 && conditionCode < 400) return 'fa-cloud-rain';
@@ -862,7 +844,6 @@
                 if (conditionCode === 800) return 'fa-sun';
                 if (conditionCode > 800) return 'fa-cloud';
             } 
-            // Night icons
             else {
                 if (conditionCode >= 200 && conditionCode < 300) return 'fa-bolt';
                 if (conditionCode >= 300 && conditionCode < 400) return 'fa-cloud-rain';
@@ -876,7 +857,6 @@
             return 'fa-cloud';
         }
 
-        // Toggle dark/light mode
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             
@@ -889,7 +869,6 @@
             }
         }
 
-        // Update favorite button state
         function updateFavoriteButton() {
             if (!currentWeatherData) return;
             
@@ -906,7 +885,6 @@
             }
         }
 
-        // Add current location to favorites
         function addToFavorites() {
             if (!currentWeatherData) return;
             
@@ -929,7 +907,6 @@
                 renderFavorites();
                 updateFavoriteButton();
                 
-                // Show confirmation
                 const originalHTML = addFavorite.innerHTML;
                 addFavorite.innerHTML = '<i class="fas fa-check"></i><span>Added to Favorites!</span>';
                 setTimeout(() => {
@@ -938,7 +915,6 @@
             }
         }
 
-        // Remove from favorites
         function removeFromFavorite(id) {
             favorites = favorites.filter(fav => fav.id !== id);
             localStorage.setItem('weatherFavorites', JSON.stringify(favorites));
@@ -946,7 +922,6 @@
             updateFavoriteButton();
         }
 
-        // Render favorites list
         function renderFavorites() {
             if (favorites.length === 0) {
                 favoritesSection.style.display = 'none';
@@ -984,19 +959,16 @@
             });
         }
 
-        // Show loading indicator
         function showLoading() {
             loading.style.display = 'block';
             weatherCard.style.display = 'none';
             errorMessage.style.display = 'none';
         }
 
-        // Hide loading indicator
         function hideLoading() {
             loading.style.display = 'none';
         }
 
-        // Show error message
         function showError(message) {
             errorText.textContent = message;
             errorMessage.style.display = 'block';
@@ -1004,12 +976,10 @@
             hideLoading();
         }
 
-        // Hide error message
         function hideError() {
             errorMessage.style.display = 'none';
         }
 
-        // Mock weather data for demonstration
         function getMockWeatherData(city) {
             const mockData = {
                 'new york': {
@@ -1077,14 +1047,12 @@
             return mockData[city.toLowerCase()];
         }
 
-        // Mock weather data by coordinates
         function getMockWeatherDataByCoords(lat, lon) {
             const cities = ['new york', 'london', 'tokyo', 'paris', 'sydney'];
             const randomCity = cities[Math.floor(Math.random() * cities.length)];
             return getMockWeatherData(randomCity);
         }
 
-        // Initialize the app when the DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
