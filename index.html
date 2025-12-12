@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Weather App</h1>
+      <div class="sub">Today’s mood: powered by the sky.</div>
+    </header>
+
+    <div class="search">
+      <input id="cityInput" type="search" placeholder="Enter city name" />
+      <button id="searchBtn">Search</button>
+      <button id="geoBtn" class="small-btn">Use my location</button>
+    </div>
+
+    <div id="resultArea">
+      <div class="card" id="weatherCard" style="display:none">
+        <div class="left">
+          <div class="city" id="cityName">City, Country</div>
+          <div class="desc" id="weatherDesc">Clear sky</div>
+          <div class="temp" id="temperature">--°C</div>
+          <div class="details">
+            <div id="feels">Feels: --°C</div>
+            <div id="humidity">Humidity: --%</div>
+            <div id="wind">Wind: -- m/s</div>
+          </div><br>
+          <div class="hint">Tip: Try searching “London” or tap “Use my location”.</div>
+        </div>
+
+        <div class="right">
+          <div class="icon">
+            <img id="weatherIcon" src="" width="96" height="96">
+          </div>
+          <div class="meta" id="metaLine">Updated: --</div>
+        </div>
+      </div>
+
+      <div id="errorBox" class="error" style="display:none"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
